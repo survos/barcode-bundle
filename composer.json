@@ -21,7 +21,8 @@
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^12",
         "symfony/framework-bundle": "^7.3",
-        "symfony/yaml": "^7.3"
+        "symfony/yaml": "^7.3",
+        "survos/step-bundle": "dev-main"
     },
     "autoload": {
         "psr-4": {
