@@ -1,72 +1,42 @@
-# Scaffold an application using Castor
-
-This directory contains a castor file and some code snippets to build a demo that uses survos/barcode-bundle
-
-Create a Symfony project and then get this file
-
-wget ... | bash
-castor list
-
-You can run each step individually, or build a working demo
-
-castor build
-
-New chat
-
-I'm going to use castor task runner to scaffold an application that demonstrates how to use my Symfony bundles.
-
-
-
-The workflow I want is
-
-
-
-symfony new...
-
-wget/curl the castor file from github
-
-castor build (run composer req my-bundle, creates a controller and twig file, create a console command to import some data, create an entity)
-
-
-
-Each of those steps can be run individually.
-
-
-
-I have a working castor file, my first question is where in the bundle should the castor file and artifacts(need a better word.  inputs?) go?  I'm thinking castor
-
-
-
-tree castor/
-
-castor/
-
+```
+skeleton/
 ├── castor.php
-
 ├── README.md
-
-├── src
-
-│   ├── Command
-
-│   │   └── ImportProductsCommmand.php
-
-│   └── Entity
-
+└── demo/
+├── src/
+│   ├── Command/
+│   │   └── ImportProductsCommand.php
+│   └── Entity/
 │       └── Product.php
+└── templates/
+└── products/
+└── index.html.twig
+```
 
-└── templates
+**Rationale:**
+- `.castor/` (hidden) keeps it out of the way but discoverable
+- OR `castor/` if you want it more visible (your original choice works fine)
+- `demo/` subdirectory makes it clear these are demo/scaffold artifacts, not part of the bundle itself
 
-    └── products.html.twig
+## Alternative: Consider "skeleton" terminology
 
+Since you mentioned needing a better word than "artifacts/inputs", you could use Symfony's familiar terminology:
+```
+castor/
+├── castor.php
+├── README.md
+└── skeleton/
+├── src/
+├── templates/
+└── config/  # if you need demo config
+```
 
+This mirrors how Symfony uses "skeleton" for boilerplate code.
 
-Then the castor file would copy these files into the right location to scaffold the app.  Great way to make sure everything still works in the upcoming Symfony 8.0
+## Additional considerations
 
+1. **Add a config directory** if your demo needs any YAML configuration (routes, services, etc.)
 
-
-
-
-Need a coding agent?
-Best-in-class coding agent
-Switch to Claude Code
+2. **Consider a .gitattributes** entry to exclude castor files from bundle distribution:
+```
+/castor export-ignore

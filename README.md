@@ -2,6 +2,88 @@
 
 Symfony Bundle for the [picqer/php-barcode-generator](https://github.com/picqer/php-barcode-generator) library, to generate an SVG barcode within twig.
 
+# Barcode Bundle Demo
+
+Quick demonstration of survos/barcode-bundle functionality.
+
+## Prerequisites
+
+- PHP 8.2+
+- Symfony CLI
+- [Castor](https://castor.jolicode.com/) task runner
+
+## Install Castor
+```bash
+curl "https://castor.jolicode.com/install" | bash
+```
+
+## Quick Start
+```bash
+# Create a new Symfony project
+symfony new barcode-demo --webapp
+cd barcode-demo
+
+# Download the demo castor file
+wget https://raw.githubusercontent.com/survos/barcode-bundle/main/castor/castor.php
+
+# See available tasks
+castor list
+
+# Build complete demo (installs bundle, creates files, sets up database, starts server)
+castor build
+```
+
+## Individual Steps
+
+Run these independently if you prefer:
+```bash
+castor setup        # Install bundle and create directories
+castor copy-files   # Copy demo files from bundle
+castor database     # Configure SQLite and create schema
+castor import       # Load sample product data
+castor open         # Start web server and open browser
+castor clean        # Remove demo files (optional)
+```
+
+## What Gets Created
+
+- `src/Entity/Product.php` - Sample entity with barcode support
+- `src/Repository/ProductRepository.php` - Repository
+- `src/Command/ImportProductsCommand.php` - Data import command
+- `templates/products.html.twig` - Product listing template
+- SQLite database with sample products
+
+## Next Steps
+
+Visit the opened browser to see:
+- Product listing with barcodes
+- EasyAdmin dashboard
+- Barcode generation examples
+
+## Cleanup
+```bash
+castor clean  # Removes all demo files
+```
+
+## Troubleshothy
+
+**Castor file not found**: Make sure you're in the project root directory
+
+**Permission denied**: Run `chmod +x castor.php`
+
+**Bundle not installed**: Run `castor setup` first before other commands
+
+## Demo Application
+
+Try the bundle instantly:
+```bash
+symfony new barcode-demo --webapp && cd barcode-demo && \
+wget https://raw.githubusercontent.com/survos/barcode-bundle/main/castor/castor.php && \
+castor build
+```
+
+See the [demo README](castor/README.md) for step-by-step instructions.
+
 ```bash
 composer req survos/barcode-bundle
 ```
