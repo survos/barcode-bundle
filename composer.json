@@ -22,7 +22,7 @@
         "phpunit/phpunit": "^12",
         "symfony/framework-bundle": "^7.3||^8.0",
         "symfony/yaml": "^7.3||^8.0",
-        "survos/step-bundle": "dev-main"
+        "survos/step-bundle": "^2.0"
     },
     "autoload": {
         "psr-4": {
