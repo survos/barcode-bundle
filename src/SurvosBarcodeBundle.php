@@ -10,6 +10,7 @@ use Survos\BarcodeBundle\Service\BarcodeService;
 use Survos\BarcodeBundle\Twig\BarcodeTwigExtension;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -18,9 +19,10 @@ class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterfac
 {
     const SERVICE_TAG = 'barcode.generator';
     protected string $extensionAlias = 'survos_barcode';
+
     public function build(ContainerBuilder $container): void
     {
-        $container->addCompilerPass($this);
+        $container->addCompilerPass($this, PassConfig::TYPE_BEFORE_OPTIMIZATION);
     }
 
     public function process(ContainerBuilder $container): void
