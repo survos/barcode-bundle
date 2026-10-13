@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Survos\BarcodeBundle;
 
 use Picqer\Barcode\BarcodeGeneratorHTML;
@@ -17,7 +19,7 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterface
 {
-    const SERVICE_TAG = 'barcode.generator';
+    public const SERVICE_TAG = 'barcode.generator';
     protected string $extensionAlias = 'survos_barcode';
 
     public function build(ContainerBuilder $container): void
@@ -27,7 +29,6 @@ class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterfac
 
     public function process(ContainerBuilder $container): void
     {
-
         $service = $container->getDefinition(BarcodeService::class);
         $generators = $container->findTaggedServiceIds(self::SERVICE_TAG);
         foreach ($generators as $id => $tags) {
@@ -45,7 +46,7 @@ class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterfac
         return match ($generatorClass) {
             BarcodeGeneratorJPG::class => 'image/jpeg',
             BarcodeGeneratorPNG::class => 'image/png',
-            default => null
+            default => null,
         };
     }
 
@@ -68,9 +69,9 @@ class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterfac
         foreach ([
             BarcodeGeneratorSVG::class,
             BarcodeGeneratorHTML::class,
-//            BarcodeGeneratorDynamicHTML::class,
+            //            BarcodeGeneratorDynamicHTML::class,
             BarcodeGeneratorPNG::class,
-            BarcodeGeneratorJPG::class
+            BarcodeGeneratorJPG::class,
         ] as $generatorClass) {
             $builder->autowire($generatorClass)
                 ->setPublic(true)
@@ -78,7 +79,7 @@ class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterfac
                 ->setAutowired(true)
                 ->addTag(self::SERVICE_TAG, [
                     'class' => $generatorClass,
-                    'image_format' => $this->getImageFormat($generatorClass)
+                    'image_format' => $this->getImageFormat($generatorClass),
                 ]);
         }
     }
@@ -92,6 +93,5 @@ class SurvosBarcodeBundle extends AbstractBundle implements CompilerPassInterfac
             ->scalarNode('height')->defaultValue(30)->end()
             ->scalarNode('foregroundColor')->defaultValue('green')->end()
             ->end();
-        ;
     }
 }

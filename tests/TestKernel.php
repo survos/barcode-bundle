@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Survos\BarcodeBundle\Tests;
 
 use Survos\BarcodeBundle\SurvosBarcodeBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-//use Symfony\Bundle\TwigBundle\TwigBundle;
+// use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
@@ -13,7 +15,7 @@ class TestKernel extends BaseKernel
     public function registerBundles(): iterable
     {
         return [
-//            new TwigBundle(),
+            //            new TwigBundle(),
             new FrameworkBundle(),
             new SurvosBarcodeBundle(),
         ];
@@ -29,6 +31,6 @@ class TestKernel extends BaseKernel
 
     public function getProjectDir(): string
     {
-        return __DIR__ . '/project-dir';
+        return __DIR__.'/project-dir';
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Survos\BarcodeBundle\Twig;
 
 use Picqer\Barcode\BarcodeGenerator;
@@ -16,7 +18,7 @@ class BarcodeTwigExtension extends AbstractExtension
         private BarcodeService $barcodeService,
         private int $widthFactor,
         private int $height,
-        private string $foregroundColor
+        private string $foregroundColor,
     ) {
     }
 
@@ -43,18 +45,17 @@ class BarcodeTwigExtension extends AbstractExtension
         ?int $height = null,
         ?string $foregroundColor = null,
         string $type = BarcodeGenerator::TYPE_CODE_128,
-        string $generatorClass = 'BarcodeGeneratorSVG'
+        string $generatorClass = 'BarcodeGeneratorSVG',
     ): string {
-
         $generatorData = $this->barcodeService->getGenerator($generatorClass);
         /** @var BarcodeGeneratorSVG|BarcodeGeneratorPNG $generatorInstance */
         $generatorInstance = new $generatorData['class']();
         $imageFormat = $generatorData['image_format'] ?? null;
         $widthFactor = match ($generatorClass) {
             BarcodeGeneratorSVG::class => (float) $this->widthFactor,
-            default => $widthFactor ?? $this->widthFactor
+            default => $widthFactor ?? $this->widthFactor,
         };
-//        dd($generatorClass, $widthFactor);
+        //        dd($generatorClass, $widthFactor);
         $barcodeData = $generatorInstance->getBarcode(
             barcode: $value,
             type: $type,
@@ -68,6 +69,7 @@ class BarcodeTwigExtension extends AbstractExtension
         if ($imageFormat) {
             $barcodeData = base64_encode($barcodeData);
         }
+
         return $barcodeData;
     }
 }
